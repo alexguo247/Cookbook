@@ -10,6 +10,7 @@ CREATE_USER_URL = reverse('user:create')
 TOKEN_URL = reverse('user:token')
 ME_URL = reverse('user:me')
 
+
 def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
@@ -33,7 +34,6 @@ class PublicUserApiTests(TestCase):
         self.assertTrue(user.check_password(payload['password']))
         self.assertNotIn('password', res.data)
 
-
     def test_user_exists(self):
         """Test creating a user that already exists fails"""
         payload = {'email': 'alexguo247@gmail.com', 'password': 'password123'}
@@ -43,7 +43,11 @@ class PublicUserApiTests(TestCase):
 
     def test_password_too_short(self):
         """Password must be more than 6 characters"""
-        payload = {'email': 'alexguo247@gmail.com', 'password': 'pw', 'name': 'Test',}
+        payload = {
+            'email': 'alexguo247@gmail.com',
+            'password': 'pw',
+            'name': 'Test',
+        }
         res = self.client.post(CREATE_USER_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         user_exists = get_user_model().objects.filter(
@@ -61,8 +65,8 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_invalid_credentials(self):
         """Test that token is not created if invalid credentials are given"""
-        create_user(email= 'test@gmail.com', password='testpass')
-        payload = {'email':'test@gmail.com', 'password':'wrong'}
+        create_user(email='test@gmail.com', password='testpass')
+        payload = {'email': 'test@gmail.com', 'password': 'wrong'}
         res = self.client.post(TOKEN_URL, payload)
         self.assertNotIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
