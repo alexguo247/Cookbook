@@ -1,0 +1,7 @@
+.add-recipe {
+    fill: #837A75;
+    transform: scale(2);
+}
+.add-recipe:hover {
+    fill: #605B56;
+}

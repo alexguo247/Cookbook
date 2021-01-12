@@ -1,0 +1,28 @@
+html {
+    background-color: #F2FBE0
+}
+.app-title {
+    text-align: center;
+}
+.container {
+    text-align: center;
+    justify-content: center;
+}
+.recipe-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-flow: dense;
+    grid-gap: 2rem;
+    align-items:center;
+}
+.recipe-container > img {
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+}
+
+.recipe-modal {
+    margin: auto;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
