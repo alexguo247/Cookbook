@@ -1,7 +1,7 @@
 # Cookbook
 ## Description
-Cookbook is a web application that allows you to store your recipes! Create an account, and store the details of your recipe. You can also upload
-images of your dishes,
+Cookbook is a web application that allows you to store your recipes! Create an account, store the details of your recipe, and upload
+images of your dishes.
 Built using Django, PostgreSQL, and React. Python libraries used include psycopg2, Pillow, flake8, and django-cors-headers. 
 
 ## How to run the application
