@@ -3,11 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import Button from '@material-ui/core/Button';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
+import ModalTabs from './ModalTabs';
 import TextField from '@material-ui/core/TextField';
 import '../styles/RecipeModal.css';
 import TimeInput from './TimeInput';
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -25,7 +26,13 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeModal(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [activeTab, setActiveTab] = React.useState(1);
 
+  const toggleTab = (tab) => {
+    if (activeTab !== tab) {
+      setActiveTab(tab);
+    }
+  }
   const handleOpen = () => {
     setOpen(true);
   };
@@ -55,13 +62,9 @@ export default function RecipeModal(props) {
           timeout: 500,
         }}
       >
+
         <Fade in={open}>
-          <div className={classes.paper}>
-              <form onSubmit={props.handleSubmit}>
-                <TextField id="standard-basic" label="Standard"/>
-                <TimeInput />
-              </form>
-          </div>
+          <ModalTabs />
         </Fade>
       </Modal>
     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/Home.css'
 import RecipeCard from '../components/RecipeCard'
-import RecipeModal from '../components/RecipeModal'
+import RecipeModal from '../components/RecipeModal';
 import { recipeService } from '../api/recipeService';
 
 export default function Home() {
@@ -49,9 +49,7 @@ export default function Home() {
                 />
             </div>
             <div className="recipe-modal">
-                    <RecipeModal 
-
-                    />
+                <RecipeModal />
             </div>
             
         </div>
