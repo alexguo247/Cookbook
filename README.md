@@ -1,10 +1,10 @@
 # Cookbook
-##Description
+## Description
 Cookbook is a web application that allows you to store your recipes! Create an account, and store the details of your recipe. You can also upload
 images of your dishes,
 Built using Django, PostgreSQL, and React. Python libraries used include psycopg2, Pillow, flake8, and django-cors-headers. 
 
-##How to run the application
+## How to run the application
 
 1. Clone the project by running `$git clone https://github.com/alexguo247/Cookbook.git`
 2. Cd and run the command `docker-compose build` in the backend folder to install all the required libraries
