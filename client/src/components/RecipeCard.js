@@ -48,7 +48,7 @@ export default function RecipeCard(props) {
     <Card className={classes.root}>
       <CardHeader
         title={props.title}
-        subheader={`"Cook time:"` + props.cookTime}
+        subheader={`Cook time: ` + props.cookTime + ` minutes`}
       />
       <CardMedia
         className={classes.media}
@@ -56,6 +56,7 @@ export default function RecipeCard(props) {
         title={props.title}
       />
       <CardContent>
+      <Typography paragraph>Tags:</Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           {props.tags}
         </Typography>
@@ -64,6 +65,9 @@ export default function RecipeCard(props) {
           <a target="_blank" rel="noreferrer" href={props.link}>
             <LinkIcon aria-label="go to the recipe link" />
           </a>
+          <Typography variant="body2" color="textSecondary" component="p">
+          {`Price: $` + props.amount}
+        </Typography>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -78,9 +82,9 @@ export default function RecipeCard(props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Ingredients:</Typography>
-          <Typography paragraph>
-            {props.ingredients}
-          </Typography>
+            <Typography paragraph>
+              {props.ingredients}
+            </Typography>
         </CardContent>
       </Collapse>
     </Card>

@@ -1,55 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Home.css'
 import RecipeCard from '../components/RecipeCard'
 import RecipeModal from '../components/RecipeModal';
 import { recipeService } from '../api/recipeService';
+import Typography from '@material-ui/core/Typography';
 
 export default function Home() {
     const [recipes, setRecipes] = useState([]);
-
+    const addRecipes = async(newRecipe) => {
+        console.log(newRecipe);
+        setRecipes(prevRecipes => {
+            return [...prevRecipes, newRecipe];
+        });
+        await recipeService.createRecipe(newRecipe);
+    }
+    // const removeRecipe = (idx) => {
+    //     setRecipe(
+    //         recipe.filter(
+    //             (s, sidx) => idx !== sidx
+    //             )
+    //     );
+    //   }
     return (
         <div className="container">
-            <h3 className="app-title">Cookbook</h3>
+            <h1 className="app-title">Cookbook</h1>
             <div className="recipe-container">
-                    {/* {
-                        recipes.map((recipe, id) => (
-                            <RecipeCard />
+                    {
+                        recipes.map((recipe, idx) => (
+                            <RecipeCard 
+                                key={idx}
+                                id={idx}
+                                title={recipe.title}
+                                ingredients={recipe.ingredients.map((ing, id) => (
+                                    <Typography key={id}>
+                                        {ing.name}
+                                    </Typography>
+                                ))}
+                                tags={recipe.tags.map((tag, id) => (
+                                    <Typography key={id}>
+                                        {tag.name}
+                                    </Typography>
+                                ))}
+                                link={recipe.link}
+                                amount={recipe.amount}
+                                cookTime={recipe.time_minutes}
+                            />
                         ))
-                    } */}
-                <RecipeCard 
-                    title="Hi"
-                    ingredients="Hi"
-                    tags="Hi"
-                    image=""
-                    link="https://google.ca"
-                />
-                <RecipeCard 
-                    title="Hi"
-                    ingredients="Hi"
-                    tags="Hi"
-                    image=""
-                />
-                <RecipeCard 
-                    title="Hi"
-                    ingredients="Hi"
-                    tags="Hi"
-                    image=""
-                />
-                <RecipeCard 
-                    title="Hi"
-                    ingredients="Hi"
-                    tags="Hi"
-                    image=""
-                />
-                <RecipeCard 
-                    title="Hi"
-                    ingredients="Hi"
-                    tags="Hi"
-                    image=""
-                />
+                    }
             </div>
             <div className="recipe-modal">
-                <RecipeModal />
+                <RecipeModal onAdd={addRecipes}/>
             </div>
             
         </div>

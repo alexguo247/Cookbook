@@ -29,7 +29,7 @@ function CreateTag(props) {
   return (
     <div>
       <form>
-            <TextField id="outlined" label="Ingredient Name" variant="outlined" onChange={handleChange} value={tag.name}/>
+            <TextField id="outlined" label="Tag Name" variant="outlined" onChange={handleChange} value={tag.name}/>
             <Fab color="primary" aria-label="add" onClick={submitTag}>
                 <AddIcon/>
             </Fab>

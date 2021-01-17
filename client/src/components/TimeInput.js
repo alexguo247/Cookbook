@@ -13,7 +13,7 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-export default function DiscreteSlider() {
+export default function TimeInput(props) {
   const classes = useStyles();
 
   return (
@@ -22,6 +22,8 @@ export default function DiscreteSlider() {
         Time to cook (minutes):
       </Typography>
       <Slider
+        onChange={props.onChange}
+      
         defaultValue={0}
         getAriaValueText={valuetext}
         aria-labelledby="discrete-slider"

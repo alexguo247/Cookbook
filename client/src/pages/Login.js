@@ -27,6 +27,7 @@ class Login extends Component {
   async userLogin() {
     const loggedIn = await authService.login(this.state);
     if (loggedIn) {
+      console.log(loggedIn.data.token);
       localStorage.setItem("token", loggedIn.data.token);
       localStorage.setItem("user", JSON.stringify(loggedIn.data));
       this.props.history.push("/home");

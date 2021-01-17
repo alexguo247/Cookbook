@@ -11,8 +11,11 @@ import List from '@material-ui/core/List';
 import CreateIngredient from './CreateIngredient';
 import CreateTag from './CreateTag';
 import ListItemComponent from './ListItemComponent';
-import CreateRecipe from './CreateRecipe';
+import CreateImage from './CreateImage';
 import { recipeService } from '../api/recipeService';
+import TimeInput from "./TimeInput";
+import TextField from "@material-ui/core/TextField";
+import Button from '@material-ui/core/Button';
 
 
 function TabPanel(props) {
@@ -27,7 +30,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
+        <Box p={4}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -50,44 +53,78 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500,
+    width: 700,
   },
   paper: {
     padding: theme.spacing(2, 4, 3),
   },
 }));
 
-export default function ModalTabs() {
-const [recipes, setRecipes] = useState([]);
+export default function ModalTabs(props) {
 const [ingredients, setIngredients] = useState([]);
 const [tags, setTags] = useState([]);
+const [recipe, setRecipe] = useState({
+    title: '',
+    ingredients: [],
+    tags: [],
+    time_minutes: 0,
+    amount: 0,
+    link: '',
+});
+const [image, setImage] = useState();
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
+  function handleRecipeChange(event) {
+    const { name, value } = event.target;
+    setRecipe(prevRecipe => {
+      return {
+        ...prevRecipe,
+        [name]: value,
+      };
+    });
+  }
+  function submitRecipe(event) {
+    props.onAdd(recipe);
+    setRecipe({
+      title: '',
+      ingredients: [],
+      tags: [],
+      time_minutes: 0,
+      amount: 0,
+      link: '',
+    });
+    event.preventDefault();
+  }
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const addIngredient = async(newIngredient) => {
-      setIngredients(prevIngredients => {
-          return [...prevIngredients, newIngredient]
-        })
+    
+      setIngredients(prevIngredients => 
+          [...prevIngredients, newIngredient]
+        )
+        
          await recipeService.createIngredient(newIngredient);
+         recipe.ingredients = ingredients;
   }
-  const addTag = (newTag) => {
+  const addTag = async(newTag) => {
+    
     setTags(prevTags => {
         return [...prevTags, newTag];
     });
+    
+    await recipeService.createTag(newTag);
+    recipe.tags = tags;
 
 }
-const addRecipe = (newRecipe) => {
-    newRecipe.ingredients = ingredients;
-    newRecipe.tags = tags;
-    setRecipes(prevRecipes => {
-        return [...prevRecipes, newRecipe];
-    });
+const addImage = async(newImage) => {
+    setImage(newImage);
+    await recipeService.uploadImage(newImage);
 }
+
     const removeIngredient = (idx) => {
         setIngredients(
             ingredients.filter(
@@ -98,13 +135,6 @@ const addRecipe = (newRecipe) => {
       const removeTag = (idx) => {
         setTags(
             tags.filter(
-                (s, sidx) => idx !== sidx
-                )
-        );
-      }
-      const removeRecipe = (idx) => {
-        setRecipes(
-            recipes.filter(
                 (s, sidx) => idx !== sidx
                 )
         );
@@ -129,6 +159,7 @@ const addRecipe = (newRecipe) => {
           <Tab label="Ingredients" {...a11yProps(0)} />
           <Tab label="Tags" {...a11yProps(1)} />
           <Tab label="Recipe" {...a11yProps(2)} />
+          <Tab label="Add Image" {...a11yProps(3)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -172,7 +203,16 @@ const addRecipe = (newRecipe) => {
                 </List>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-            <CreateRecipe onAdd={addRecipe}/>
+            <form>
+                <TextField name="title" id="outlined-full-width" fullWidth label="Recipe Title" variant="outlined" onChange={handleRecipeChange} />
+                <TimeInput name="time_minutes" onChange={handleRecipeChange}/>
+                <TextField name="amount" id="outlined-full-width" fullWidth label="Price ($)" variant="outlined"onChange={handleRecipeChange}/>
+                <TextField name="link" id="outlined-full-width" fullWidth label="Recipe Link" variant="outlined" onChange={handleRecipeChange}/>
+                <Button variant="contained" onClick={submitRecipe}>Save</Button>
+            </form>
+        </TabPanel>
+        <TabPanel value={value} index={3} dir={theme.direction}>
+            <CreateImage onAdd={addImage}/>
         </TabPanel>
       </SwipeableViews>
     </div>

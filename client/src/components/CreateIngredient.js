@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 import Fab from "@material-ui/core/Fab";
@@ -20,10 +20,13 @@ function CreateIngredient(props) {
 
   function submitIngredient() {
     props.onAdd(ingredient);
+    
     setIngredient({
       name: "",
     });
   }
+
+  
 
   return (
     <div>
