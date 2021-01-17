@@ -14,4 +14,4 @@ Built using Django, PostgreSQL, and React. Python libraries used include psycopg
 
 ## GIF Demo
 
-![Alt Text](https://media.giphy.com/media/Uf6vCJhIAp0ltHLXe0/giphy.gif)
+![Alt Text](https://media.giphy.com/media/lIs31JqQ8Tz10AyZn5/giphy.gif)
